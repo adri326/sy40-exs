@@ -53,3 +53,21 @@ add_executable(tp3_prg3 src/tp3/prg3.c)
 
 project(tp3_prg4)
 add_executable(tp3_prg4 src/tp3/prg4.c)
+
+project(tp4_prg1)
+add_executable(tp4_prg1 src/tp4/prg1.c)
+
+project(tp4_prg3)
+add_executable(tp4_prg3 src/tp4/prg3.c)
+
+project(tp4_prg4)
+add_executable(tp4_prg4 src/tp4/prg4.c)
+
+project(tp4_prg4bis)
+add_executable(tp4_prg4bis src/tp4/prg4bis.c)
+
+project(tp4_prg5)
+add_executable(tp4_prg5 src/tp4/prg5.c)
+
+project(tp4_sleep)
+add_executable(tp4_sleep src/tp4/sleep.c)
