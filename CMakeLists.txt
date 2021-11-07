@@ -74,3 +74,6 @@ add_executable(tp4_sleep src/tp4/sleep.c)
 
 project(port)
 add_executable(port src/port.c)
+
+project(utils)
+add_executable(utils src/utils.c)
