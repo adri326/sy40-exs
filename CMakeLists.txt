@@ -86,3 +86,8 @@ target_compile_definitions(tp5_p3 PUBLIC -DP3)
 
 project(tp5_prg2)
 add_executable(tp5_prg2 src/tp5/prg2.c)
+
+
+
+project(utils)
+add_executable(utils src/utils.c)
