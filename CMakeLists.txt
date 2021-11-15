@@ -74,3 +74,15 @@ add_executable(tp4_sleep src/tp4/sleep.c)
 
 project(port)
 add_executable(port src/port.c)
+
+project(tp5_p1)
+project(tp5_p2)
+project(tp5_p3)
+add_executable(tp5_p1 src/tp5/prg1.c)
+add_executable(tp5_p2 src/tp5/prg1.c)
+target_compile_definitions(tp5_p2 PUBLIC -DP2)
+add_executable(tp5_p3 src/tp5/prg1.c)
+target_compile_definitions(tp5_p3 PUBLIC -DP3)
+
+project(tp5_prg2)
+add_executable(tp5_prg2 src/tp5/prg2.c)
