@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
+#include <stdlib.h>
 
 #ifndef ASSERT_H
 #define ASSERT_H

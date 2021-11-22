@@ -88,6 +88,8 @@ project(tp5_prg2)
 add_executable(tp5_prg2 src/tp5/prg2.c)
 
 
+project(tp6_prg2)
+add_executable(tp6_prg2 src/tp6/prg2.c)
 
 project(utils)
 add_executable(utils src/utils.c)
