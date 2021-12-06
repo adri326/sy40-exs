@@ -4,6 +4,10 @@
 #include <sys/sem.h>
 #include "assert.h"
 
+#ifndef SEMPERM
+#define SEMPERM 0600
+#endif
+
 union semctl {
     int value;
     struct semid_ds* buffer;

@@ -91,5 +91,18 @@ add_executable(tp5_prg2 src/tp5/prg2.c)
 project(tp6_prg2)
 add_executable(tp6_prg2 src/tp6/prg2.c)
 
+
+project(tp7_prg1)
+add_executable(tp7_prg1 src/tp7/prg1.c)
+
+project(tp7_prg3)
+add_executable(tp7_prg3 src/tp7/prg3.c)
+
+
+project(tp8_coiffeur)
+add_executable(tp8_coiffeur src/tp8/coiffeur.c)
+find_package(Threads REQUIRED)
+target_link_libraries(tp8_coiffeur PRIVATE Threads::Threads)
+
 project(utils)
 add_executable(utils src/utils.c)
