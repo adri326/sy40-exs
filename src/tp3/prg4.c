@@ -3,6 +3,7 @@
                Lancement d'une sous routine "wc - w "
 -------------------------------------------------------------*/
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -17,17 +18,20 @@ void erreur(const char* msg) {
     exit(1);
 }
 
-int AppelCommande(const char* commande, int fd[2]) {
+/// We need *two* tubes: one for communication to the child process and
+/// one for communication from the child process.
+int AppelCommande(const char* commande, int fd[2], int fd2[2]) {
     pipe(fd);
+    pipe(fd2);
     pid_t pid = fork();
     if (pid == -1) erreur("Fork");
     else if (pid == 0) { // Fils
         char* buffer = (char*)malloc(sizeof(char) * (strlen(commande) + 1));
         strcpy(buffer, commande);
-        dup2(fd[0], 0);
-        dup2(fd[1], 1);
-        close(fd[0]);
+        assert(dup2(fd[0], STDIN_FILENO) != -1);
+        assert(dup2(fd2[1], STDOUT_FILENO) != -1);
         close(fd[1]);
+        close(fd2[0]);
 
         char* split[1024] = {0,};
         char* ptr = strtok(buffer, " ");
@@ -40,6 +44,8 @@ int AppelCommande(const char* commande, int fd[2]) {
 
         execvp(split[0], split);
     } else {
+        close(fd[0]);
+        close(fd2[1]);
         // noop
     }
 
@@ -47,7 +53,7 @@ int AppelCommande(const char* commande, int fd[2]) {
 }
 
 int main(int argc, char* argv[]) {
-    int tube[2];
+    int tube[2], tube2[2];
     FILE* fichier;
     char* contenu;
     struct stat status;
@@ -73,7 +79,7 @@ int main(int argc, char* argv[]) {
 
     /* Lancement activite */
 
-    if (AppelCommande("wc -w", tube) != 0)
+    if (AppelCommande("wc -w", tube, tube2) != 0)
         erreur("Invoque processus");
 
     /* On ecrit */
@@ -82,13 +88,13 @@ int main(int argc, char* argv[]) {
     close(tube[1]);
 
     fprintf(stdout, "Nombre de mots :  ");
-    while (read(tube[0], &c, 1) == 1)
+    while (read(tube2[0], &c, 1) == 1)
         fputc(c, stdout);
-    close(tube[0]);
+    close(tube2[0]);
 
     /*************************/
 
-    if (AppelCommande("wc -l", tube) != 0)
+    if (AppelCommande("wc -l", tube, tube2) != 0)
         erreur("Invoque processus");
 
     /* On ecrit */
@@ -97,9 +103,9 @@ int main(int argc, char* argv[]) {
     close(tube[1]);
 
     fprintf(stdout, "Nombre de lignes :  ");
-    while (read(tube[0], &c, 1) == 1)
+    while (read(tube2[0], &c, 1) == 1)
         fputc(c, stdout);
-    close(tube[0]);
+    close(tube2[0]);
 
     /***********************/
 
